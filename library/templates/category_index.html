@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Category {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<table class="content-table">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Function</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+
+        
+
+        <li><a href="{% url 'category_create' %}">Create</a></li>
+        {% for category in categories %}
+            <tr>
+
+                <td scope="row">            <li><a href="{% url 'category_detail'  category.id  %}">{{category.name}}</a></li>
+                </td>
+                <td>{{ category.description }}</td>
+                <td>
+                    {{ category.id }}
+                </td>
+            </tr>
+        {% endfor %}
+        
+    </tbody>
+</table>
+{% endblock %}
+
+    
+    
