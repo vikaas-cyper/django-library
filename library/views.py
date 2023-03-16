@@ -8,7 +8,7 @@ def index(request):
 
 class CategoryController:
     def index(request):
-        querySet = models.Category.objects.all()
+        querySet = models.Category.objects.all().order_by('name')
         return render( request , 'category_index.html' , {"categories" : querySet[:]})
     
     def view(request , pk):
@@ -26,5 +26,25 @@ class CategoryController:
             form = categoryForm.CategoryForm()
         return render(request, 'category_create.html', {'form' : form})
     
-    def delete(request , id):
-        return HttpResponse(id) 
+    
+    def edit(request, pk):
+        category = models.Category.objects.get(pk = pk)
+        form = categoryForm.CategoryForm(instance=category)
+        if request.method == "POST":
+            form = categoryForm.CategoryForm(request.POST , instance=category)
+            if form.is_valid():
+                form.save()
+                return redirect('category_list')
+        
+        return render(request, 'category_edit.html', {'form' : form, 'category' : category })
+    
+        
+        
+    def delete(request , pk):
+        category = models.Category.objects.filter(pk = pk)
+        if request.method == "POST":
+            category.delete()
+            return redirect('category_list')
+        
+        
+        return render(request, 'category_delete.html', {'category' : category})

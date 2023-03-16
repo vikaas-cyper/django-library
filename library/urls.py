@@ -7,6 +7,7 @@ urlpatterns = [
     path('category/', views.CategoryController.index, name='category_list'),
     path('category/create/', views.CategoryController.create, name='category_create'),
     path('category/<int:pk>/', views.CategoryController.view, name='category_detail'),
+    path('category/<int:pk>/edit', views.CategoryController.edit, name='category_edit'),
     path('category/<int:pk>/delete', views.CategoryController.delete, name='category_delete'),
     
 ]
