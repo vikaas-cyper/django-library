@@ -9,11 +9,11 @@ def index(request):
 class CategoryController:
     def index(request):
         querySet = models.Category.objects.all().order_by('name')
-        return render( request , 'category_index.html' , {"categories" : querySet[:]})
+        return render( request , 'category/index.html' , {"categories" : querySet[:]})
     
     def view(request , pk):
         queryset = models.Category.objects.get(pk = pk)
-        return render(request ,'category_list.html', {'category' : queryset})
+        return render(request ,'category/list.html', {'category' : queryset})
     
     def create(request):
         
@@ -24,7 +24,7 @@ class CategoryController:
                 return redirect('category_detail' , pk = category.id)
         else:
             form = categoryForm.CategoryForm()
-        return render(request, 'category_create.html', {'form' : form})
+        return render(request, 'category/create.html', {'form' : form})
     
     
     def edit(request, pk):
@@ -36,15 +36,15 @@ class CategoryController:
                 form.save()
                 return redirect('category_list')
         
-        return render(request, 'category_edit.html', {'form' : form, 'category' : category })
+        return render(request, 'category/edit.html', {'form' : form, 'category' : category })
     
         
         
     def delete(request , pk):
-        category = models.Category.objects.filter(pk = pk)
+        category = models.Category.objects.get(pk = pk)
         if request.method == "POST":
             category.delete()
             return redirect('category_list')
         
         
-        return render(request, 'category_delete.html', {'category' : category})
+        return render(request, 'category/delete.html', {'category' : category})
